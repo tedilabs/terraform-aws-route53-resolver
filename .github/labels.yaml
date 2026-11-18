@@ -1,0 +1,7 @@
+# Modules
+- color: "fbca04"
+  description: "This issue or pull request is related to resolver-inbound-endpoint module."
+  name: ":floppy_disk: resolver-inbound-endpoint"
+- color: "fbca04"
+  description: "This issue or pull request is related to resolver-query-logging module."
+  name: ":floppy_disk: resolver-query-logging"

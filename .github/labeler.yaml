@@ -1,0 +1,12 @@
+# Modules
+":floppy_disk: resolver-inbound-endpoint":
+- changed-files:
+  - any-glob-to-any-file:
+    - modules/resolver-inbound-endpoint/**/*
+    - examples/resolver-inbound-endpoint-*/**/*
+
+":floppy_disk: resolver-query-logging":
+- changed-files:
+  - any-glob-to-any-file:
+    - modules/resolver-query-logging/**/*
+    - examples/resolver-query-logging-*/**/*
