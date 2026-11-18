@@ -4,6 +4,11 @@
   - any-glob-to-any-file:
     - modules/inbound-endpoint/**/*
 
+":floppy_disk: outbound-endpoint":
+- changed-files:
+  - any-glob-to-any-file:
+    - modules/outbound-endpoint/**/*
+
 ":floppy_disk: query-logging":
 - changed-files:
   - any-glob-to-any-file:

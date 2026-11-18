@@ -7,6 +7,7 @@
 Terraform modules which create Route53 Resolver related resources on AWS.
 
 - [inbound-endpoint](./modules/inbound-endpoint)
+- [outbound-endpoint](./modules/outbound-endpoint)
 - [query-logging](./modules/query-logging)
 
 
@@ -16,6 +17,7 @@ Terraform Modules from [this package](https://github.com/tedilabs/terraform-aws-
 
 - **Route53 Resolver**
   - Inbound Endpoint
+  - Outbound Endpoint
   - Query Logging Configuration
     - VPC and Route53 Profile Associations
     - Resource Sharing via AWS RAM
@@ -24,6 +26,7 @@ Terraform Modules from [this package](https://github.com/tedilabs/terraform-aws-
 ## Examples
 
 - [inbound-endpoint-simple](./examples/inbound-endpoint-simple)
+- [outbound-endpoint-simple](./examples/outbound-endpoint-simple)
 - [query-logging-simple](./examples/query-logging-simple)
 
 
