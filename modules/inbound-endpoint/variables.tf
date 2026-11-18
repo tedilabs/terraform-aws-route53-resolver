@@ -22,7 +22,7 @@ variable "delegation_enabled" {
 
 variable "protocols" {
   description = <<EOF
-  (Optional) A set of protocols to use for the Route53 Resolver Inbound Endpoint. The protocols determine how data is transmitted to this endpoint. Valid values are `DoH`, `Do53`, or `DoH-FIPS`. Defaults to `["Do53"]`.
+  (Optional) A set of protocols to use for the Route53 Resolver Inbound Endpoint. The protocols determine how data is transmitted to this endpoint. Valid values are `DoH`, `Do53`, or `DoH-FIPS`. Defaults to `["Do53"]`. DoH and DoH-FIPS cannot be combined. Delegation endpoints support only Do53.
     `Do53`: DNS over port 53. The data is relayed by using the Route 53 Resolver without additional encryption. While the data cannot be read by external parties, it can be viewed within the AWS networks. Uses either UDP or TCP to send the packets. Do53 is primarily used for traffic within and between Amazon VPCs.
     `DoH`: The data is transmitted over an encrypted HTTPS session. DoH adds an added level of security where data can't be decrypted by unauthorized users, and cannot be read by anyone except the intended recipient.
     `DoH-FIPS`: The data is transmitted over an encrypted HTTPS session that is compliant with the FIPS 140-2 cryptographic standard. Supported for inbound endpoints only. For more information, see FIPS PUB 140-2
@@ -32,17 +32,25 @@ variable "protocols" {
   nullable    = false
 
   validation {
-    condition = alltrue([
+    condition = length(var.protocols) > 0 && alltrue([
       for protocol in var.protocols :
       contains(["DoH", "Do53", "DoH-FIPS"], protocol)
     ])
-    error_message = "Valid values for `protocols` are `DoH`, `Do53`, or `DoH-FIPS`."
+    error_message = "`protocols` must contain at least one of `DoH`, `Do53`, or `DoH-FIPS`."
+  }
+  validation {
+    condition     = !(contains(var.protocols, "DoH") && contains(var.protocols, "DoH-FIPS"))
+    error_message = "DoH and DoH-FIPS cannot be used together."
+  }
+  validation {
+    condition     = !var.delegation_enabled || alltrue([for protocol in var.protocols : protocol == "Do53"])
+    error_message = "Delegation endpoints support only Do53."
   }
 }
 
 variable "default_security_group" {
   description = <<EOF
-  (Optional) The configuration of the default security group for the Route53 Resolver Inbound Endpoint. `default_security_group` block as defined below.
+  (Optional) The configuration of the default security group for the Route53 Resolver Inbound Endpoint. Automatic ingress rules allow TCP/UDP 53 for Do53 and TCP 443 for DoH or DoH-FIPS, only from the configured ingress sources. `default_security_group` block as defined below.
     (Optional) `enabled` - Whether to use the default security group. Defaults to `true`.
     (Optional) `name` - The name of the default security group. If not provided, the Route53 Resolver Inbound Endpoint name is used for the name of security group.
     (Optional) `description` - The description of the default security group.
