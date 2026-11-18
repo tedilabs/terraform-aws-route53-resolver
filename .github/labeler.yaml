@@ -1,0 +1,12 @@
+# Modules
+":floppy_disk: inbound-endpoint":
+- changed-files:
+  - any-glob-to-any-file:
+    - modules/inbound-endpoint/**/*
+    - examples/inbound-endpoint-*/**/*
+
+":floppy_disk: query-logging":
+- changed-files:
+  - any-glob-to-any-file:
+    - modules/query-logging/**/*
+    - examples/query-logging-*/**/*
