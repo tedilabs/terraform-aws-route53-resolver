@@ -5,3 +5,6 @@
 - color: "fbca04"
   description: "This issue or pull request is related to query-logging module."
   name: ":floppy_disk: query-logging"
+- color: "fbca04"
+  description: "This issue or pull request is related to rule module."
+  name: ":floppy_disk: rule"
