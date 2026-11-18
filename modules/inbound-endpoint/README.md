@@ -6,6 +6,12 @@ This module creates following resources.
 - `aws_security_group`
 - `aws_security_group_rule`
 
+## Enhanced metrics
+
+Set `rni_enhanced_metrics_enabled = true` to enable enhanced Resolver Network Interface (RNI) metrics. This requires AWS provider 6.27 or later. Metrics are disabled by default; set the input back to `false` to disable them after enabling them.
+
+Target name server metrics are available only for outbound endpoints.
+
 ## Examples
 
 - [inbound-endpoint-simple](../../examples/inbound-endpoint-simple)
@@ -17,14 +23,14 @@ This module creates following resources.
 | ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.12 |
 | <a name="requirement_assert"></a> [assert](#requirement\_assert) | >= 0.15 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.12 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.27 |
 | <a name="requirement_telemetry"></a> [telemetry](#requirement\_telemetry) | >= 0.2.0 |
 
 ## Providers
 
 | Name | Version |
 | ---- | ------- |
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.12 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.27 |
 
 ## Modules
 
@@ -53,6 +59,7 @@ This module creates following resources.
 | <a name="input_protocols"></a> [protocols](#input\_protocols) | (Optional) A set of protocols to use for the Route53 Resolver Inbound Endpoint. The protocols determine how data is transmitted to this endpoint. Valid values are `DoH`, `Do53`, or `DoH-FIPS`. Defaults to `["Do53"]`.<br/>    `Do53`: DNS over port 53. The data is relayed by using the Route 53 Resolver without additional encryption. While the data cannot be read by external parties, it can be viewed within the AWS networks. Uses either UDP or TCP to send the packets. Do53 is primarily used for traffic within and between Amazon VPCs.<br/>    `DoH`: The data is transmitted over an encrypted HTTPS session. DoH adds an added level of security where data can't be decrypted by unauthorized users, and cannot be read by anyone except the intended recipient.<br/>    `DoH-FIPS`: The data is transmitted over an encrypted HTTPS session that is compliant with the FIPS 140-2 cryptographic standard. Supported for inbound endpoints only. For more information, see FIPS PUB 140-2 | `set(string)` | <pre>[<br/>  "Do53"<br/>]</pre> | no |
 | <a name="input_region"></a> [region](#input\_region) | (Optional) The region in which to create the module resources. If not provided, the module resources will be created in the provider's configured region. | `string` | `null` | no |
 | <a name="input_resource_group"></a> [resource\_group](#input\_resource\_group) | (Optional) A configurations of Resource Group for this module. `resource_group` as defined below.<br/>    (Optional) `enabled` - Whether to create Resource Group to find and group AWS resources which are created by this module. Defaults to `true`.<br/>    (Optional) `name` - The name of Resource Group. A Resource Group name can have a maximum of 127 characters, including letters, numbers, hyphens, dots, and underscores. The name cannot start with `AWS` or `aws`. If not provided, a name will be generated using the module name and instance name.<br/>    (Optional) `description` - The description of Resource Group. Defaults to `Managed by Terraform.`. | <pre>object({<br/>    enabled     = optional(bool, true)<br/>    name        = optional(string, "")<br/>    description = optional(string, "Managed by Terraform.")<br/>  })</pre> | `{}` | no |
+| <a name="input_rni_enhanced_metrics_enabled"></a> [rni\_enhanced\_metrics\_enabled](#input\_rni\_enhanced\_metrics\_enabled) | (Optional) Whether to enable enhanced Resolver Network Interface (RNI) metrics for the inbound endpoint. Defaults to `false`. Set to `false` to disable metrics after enabling them. | `bool` | `false` | no |
 | <a name="input_security_groups"></a> [security\_groups](#input\_security\_groups) | (Optional) A list of security group IDs to assign to the Route53 Resolver Inbound Endpoint. | `list(string)` | `[]` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | (Optional) A map of tags to add to all resources. | `map(string)` | `{}` | no |
 | <a name="input_telemetry"></a> [telemetry](#input\_telemetry) | (Optional) A configuration to collect telemetry data for the module. This is used to improve the module and its features. To send pseudonyms instead of identifying values such as the hostname and the Git remote, set `pseudonymization_enabled` to `true`. Pseudonyms are not anonymous; to keep data from being sent, disable its collector. The default configuration enables telemetry collection for machine, network, git, github, github actions, HCP Terraform, terraform, and toolchain. You can disable telemetry collection by setting `enabled` to `false`. `telemetry` block as defined below.<br/>    (Optional) `enabled` - Whether to enable telemetry collection. Default is `true`.<br/>    (Optional) `capture_machine` - Whether to capture machine information. Default is `true`.<br/>    (Optional) `capture_network` - Whether to capture network information. Default is `true`.<br/>    (Optional) `capture_git` - Whether to capture git information. Default is `true`.<br/>    (Optional) `capture_github` - Whether to capture GitHub information. Default is `true`.<br/>    (Optional) `capture_github_actions` - Whether to capture GitHub Actions information. Default is `true`.<br/>    (Optional) `capture_hcp_terraform` - Whether to capture HCP Terraform information. Default is `true`.<br/>    (Optional) `capture_terraform` - Whether to capture Terraform information. Default is `true`.<br/>    (Optional) `capture_toolchain` - Whether to capture toolchain information. Default is `true`.<br/>    (Optional) `pseudonymization_enabled` - Whether to enable pseudonymization of the captured data. Default is `false`. | <pre>object({<br/>    enabled = optional(bool, true)<br/><br/>    capture_machine        = optional(bool, true)<br/>    capture_network        = optional(bool, true)<br/>    capture_git            = optional(bool, true)<br/>    capture_github         = optional(bool, true)<br/>    capture_github_actions = optional(bool, true)<br/>    capture_hcp_terraform  = optional(bool, true)<br/>    capture_terraform      = optional(bool, true)<br/>    capture_toolchain      = optional(bool, true)<br/><br/>    pseudonymization_enabled = optional(bool, false)<br/>  })</pre> | `{}` | no |

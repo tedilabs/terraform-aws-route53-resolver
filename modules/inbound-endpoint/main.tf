@@ -39,6 +39,8 @@ resource "aws_route53_resolver_endpoint" "this" {
     }
   }
 
+  rni_enhanced_metrics_enabled = var.rni_enhanced_metrics_enabled
+
   tags = merge(
     {
       "Name" = local.metadata.name
