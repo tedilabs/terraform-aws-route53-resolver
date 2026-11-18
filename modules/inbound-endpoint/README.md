@@ -1,4 +1,4 @@
-# resolver-inbound-endpoint
+# inbound-endpoint
 
 This module creates following resources.
 
@@ -8,7 +8,7 @@ This module creates following resources.
 
 ## Examples
 
-- [resolver-inbound-endpoint-simple](../../examples/resolver-inbound-endpoint-simple)
+- [inbound-endpoint-simple](../../examples/inbound-endpoint-simple)
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

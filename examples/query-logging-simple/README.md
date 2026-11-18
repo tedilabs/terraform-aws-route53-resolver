@@ -1,4 +1,4 @@
-# resolver-query-logging-simple
+# query-logging-simple
 
 Creates a CloudWatch Logs group with seven-day retention and associates Resolver query logging with the default VPC in `us-east-1`. Requires a default VPC with no existing query logging association. The caller needs permissions to configure CloudWatch Logs delivery and create the Resolver service-linked role when it does not exist. See [AWS logging destination permissions](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-query-logs-choosing-target-resource.html).
 
@@ -30,7 +30,7 @@ Run `terraform destroy` to remove the resources when finished.
 
 | Name | Source | Version |
 | ---- | ------ | ------- |
-| <a name="module_query_logging"></a> [query\_logging](#module\_query\_logging) | ../../modules/resolver-query-logging | n/a |
+| <a name="module_query_logging"></a> [query\_logging](#module\_query\_logging) | ../../modules/query-logging | n/a |
 
 ## Resources
 

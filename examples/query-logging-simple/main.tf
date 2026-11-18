@@ -21,8 +21,8 @@ resource "aws_cloudwatch_log_group" "query_logging" {
 ###################################################
 
 module "query_logging" {
-  source = "../../modules/resolver-query-logging"
-  # source  = "tedilabs/route53-resolver/aws//modules/resolver-query-logging"
+  source = "../../modules/query-logging"
+  # source  = "tedilabs/route53-resolver/aws//modules/query-logging"
   # version = "~> 0.1.0"
 
   name             = "resolver-query-logging-simple"

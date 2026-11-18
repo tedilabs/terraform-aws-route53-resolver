@@ -20,8 +20,8 @@ data "aws_subnet" "default" {
 ###################################################
 
 module "endpoint" {
-  source = "../../modules/resolver-inbound-endpoint"
-  # source  = "tedilabs/route53-resolver/aws//modules/resolver-inbound-endpoint"
+  source = "../../modules/inbound-endpoint"
+  # source  = "tedilabs/route53-resolver/aws//modules/inbound-endpoint"
   # version = "~> 0.1.0"
 
   name = "resolver-inbound-simple"

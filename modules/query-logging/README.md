@@ -1,4 +1,4 @@
-# resolver-query-logging
+# query-logging
 
 This module creates following resources.
 
@@ -11,7 +11,7 @@ This module creates following resources.
 
 ## Examples
 
-- [resolver-query-logging-simple](../../examples/resolver-query-logging-simple)
+- [query-logging-simple](../../examples/query-logging-simple)
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

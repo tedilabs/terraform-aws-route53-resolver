@@ -1,4 +1,4 @@
-# resolver-inbound-endpoint-simple
+# inbound-endpoint-simple
 
 Creates an inbound endpoint in two default subnets and allows DNS queries from the default VPC CIDR. Requires a default VPC and default subnets in `us-east-1a` and `us-east-1b`. For queries from a connected network, add its CIDR to `default_security_group.ingress_ipv4_cidrs`.
 
@@ -30,7 +30,7 @@ Run `terraform destroy` to remove the resources when finished.
 
 | Name | Source | Version |
 | ---- | ------ | ------- |
-| <a name="module_endpoint"></a> [endpoint](#module\_endpoint) | ../../modules/resolver-inbound-endpoint | n/a |
+| <a name="module_endpoint"></a> [endpoint](#module\_endpoint) | ../../modules/inbound-endpoint | n/a |
 
 ## Resources
 
