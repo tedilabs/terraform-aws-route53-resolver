@@ -8,3 +8,8 @@
 - changed-files:
   - any-glob-to-any-file:
     - modules/query-logging/**/*
+
+":floppy_disk: rule":
+- changed-files:
+  - any-glob-to-any-file:
+    - modules/rule/**/*
