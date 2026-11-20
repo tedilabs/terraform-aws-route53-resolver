@@ -8,7 +8,7 @@ terraform {
     }
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 6.12"
+      version = ">= 6.27"
     }
     telemetry = {
       source  = "tedilabs/telemetry"

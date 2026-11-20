@@ -175,6 +175,13 @@ variable "ip_allocations" {
   }
 }
 
+variable "rni_enhanced_metrics_enabled" {
+  description = "(Optional) Whether to enable enhanced Resolver Network Interface (RNI) metrics for the inbound endpoint. Defaults to `false`. Set to `false` to disable metrics after enabling them."
+  type        = bool
+  default     = false
+  nullable    = false
+}
+
 variable "tags" {
   description = "(Optional) A map of tags to add to all resources."
   type        = map(string)
