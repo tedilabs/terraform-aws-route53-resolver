@@ -1,0 +1,58 @@
+locals {
+  metadata = {
+    package = "terraform-aws-route53-resolver"
+    version = trimspace(file("${path.module}/../../VERSION"))
+    module  = basename(path.module)
+    name    = var.name
+  }
+  module_tags = var.module_tags_enabled ? {
+    "module.terraform.io/package"   = local.metadata.package
+    "module.terraform.io/version"   = local.metadata.version
+    "module.terraform.io/name"      = local.metadata.module
+    "module.terraform.io/full-name" = "${local.metadata.package}/${local.metadata.module}"
+    "module.terraform.io/instance"  = local.metadata.name
+  } : {}
+}
+
+
+###################################################
+# Outbound Endpoint for Route53 Resolver
+###################################################
+
+resource "aws_route53_resolver_endpoint" "this" {
+  region = var.region
+
+  direction = "OUTBOUND"
+  name      = local.metadata.name
+
+  protocols          = var.protocols
+  security_group_ids = local.security_groups
+
+  resolver_endpoint_type = var.ip_address_type
+  dynamic "ip_address" {
+    for_each = var.ip_allocations
+
+    content {
+      subnet_id = ip_address.value.subnet
+      ip        = ip_address.value.ipv4_address
+      ipv6      = ip_address.value.ipv6_address
+    }
+  }
+
+  rni_enhanced_metrics_enabled       = var.rni_enhanced_metrics_enabled
+  target_name_server_metrics_enabled = var.target_name_server_metrics_enabled
+
+  timeouts {
+    create = var.timeouts.create
+    update = var.timeouts.update
+    delete = var.timeouts.delete
+  }
+
+  tags = merge(
+    {
+      "Name" = local.metadata.name
+    },
+    local.module_tags,
+    var.tags,
+  )
+}

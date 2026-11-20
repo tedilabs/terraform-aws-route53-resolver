@@ -3,5 +3,8 @@
   description: "This issue or pull request is related to inbound-endpoint module."
   name: ":floppy_disk: inbound-endpoint"
 - color: "fbca04"
+  description: "This issue or pull request is related to outbound-endpoint module."
+  name: ":floppy_disk: outbound-endpoint"
+- color: "fbca04"
   description: "This issue or pull request is related to query-logging module."
   name: ":floppy_disk: query-logging"
