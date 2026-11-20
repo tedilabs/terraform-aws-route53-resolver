@@ -32,18 +32,25 @@ variable "protocols" {
   nullable    = false
 
   validation {
-    condition = length(var.protocols) > 0 && alltrue([
+    condition = alltrue([
       for protocol in var.protocols :
       contains(["DoH", "Do53", "DoH-FIPS"], protocol)
     ])
-    error_message = "`protocols` must contain at least one of `DoH`, `Do53`, or `DoH-FIPS`."
+    error_message = "Valid values for `protocols` are `DoH`, `Do53`, or `DoH-FIPS`."
+  }
+  validation {
+    condition     = length(var.protocols) > 0
+    error_message = "`protocols` must contain at least one protocol."
   }
   validation {
     condition     = !(contains(var.protocols, "DoH") && contains(var.protocols, "DoH-FIPS"))
     error_message = "DoH and DoH-FIPS cannot be used together."
   }
   validation {
-    condition     = !var.delegation_enabled || alltrue([for protocol in var.protocols : protocol == "Do53"])
+    condition = !var.delegation_enabled || alltrue([
+      for protocol in var.protocols :
+      protocol == "Do53"
+    ])
     error_message = "Delegation endpoints support only Do53."
   }
 }
