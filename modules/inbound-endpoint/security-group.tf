@@ -1,4 +1,23 @@
 locals {
+  ingress_dns_rules = concat(
+    (contains(var.protocols, "Do53")
+      ? [for protocol in ["tcp", "udp"] : {
+        id       = "dns-${protocol}"
+        protocol = protocol
+        port     = 53
+      }]
+      : []
+    ),
+    (contains(var.protocols, "DoH") || contains(var.protocols, "DoH-FIPS")
+      ? [{
+        id       = "doh"
+        protocol = "tcp"
+        port     = 443
+      }]
+      : []
+    ),
+  )
+
   security_groups = concat(module.security_group[*].id, var.security_groups)
 }
 
@@ -30,12 +49,12 @@ module "security_group" {
   ingress_rules = concat(
     var.default_security_group.ingress_rules,
     [
-      for protocol in ["tcp", "udp"] : {
-        id          = "dns-${protocol}"
+      for rule in local.ingress_dns_rules : {
+        id          = rule.id
         description = "Allow to query to Route53 Resolver Inbound Endpoint."
-        protocol    = protocol
-        from_port   = 53
-        to_port     = 53
+        protocol    = rule.protocol
+        from_port   = rule.port
+        to_port     = rule.port
 
         ipv4_cidrs      = var.default_security_group.ingress_ipv4_cidrs
         ipv6_cidrs      = var.default_security_group.ingress_ipv6_cidrs
