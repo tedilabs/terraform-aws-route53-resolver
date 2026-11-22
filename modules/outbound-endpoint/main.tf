@@ -12,6 +12,12 @@ locals {
     "module.terraform.io/full-name" = "${local.metadata.package}/${local.metadata.module}"
     "module.terraform.io/instance"  = local.metadata.name
   } : {}
+
+  ip_address_types = {
+    "IPv4"      = "IPV4"
+    "IPv6"      = "IPV6"
+    "DUALSTACK" = "DUALSTACK"
+  }
 }
 
 
@@ -28,7 +34,7 @@ resource "aws_route53_resolver_endpoint" "this" {
   protocols          = var.protocols
   security_group_ids = local.security_groups
 
-  resolver_endpoint_type = var.ip_address_type
+  resolver_endpoint_type = local.ip_address_types[var.ip_address_type]
   dynamic "ip_address" {
     for_each = var.ip_allocations
 

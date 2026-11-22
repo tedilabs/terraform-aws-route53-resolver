@@ -35,7 +35,10 @@ output "vpc_id" {
 
 output "ip_address_type" {
   description = "The type of IP addresses used by the Route53 Resolver Outbound Endpoint."
-  value       = aws_route53_resolver_endpoint.this.resolver_endpoint_type
+  value = {
+    for k, v in local.ip_address_types :
+    v => k
+  }[aws_route53_resolver_endpoint.this.resolver_endpoint_type]
 }
 
 output "ip_allocations" {
