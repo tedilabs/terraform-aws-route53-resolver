@@ -12,7 +12,9 @@ locals {
     "module.terraform.io/full-name" = "${local.metadata.package}/${local.metadata.module}"
     "module.terraform.io/instance"  = local.metadata.name
   } : {}
+}
 
+locals {
   ip_address_types = {
     "IPv4"      = "IPV4"
     "IPv6"      = "IPV6"
