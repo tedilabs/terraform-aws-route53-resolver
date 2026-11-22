@@ -18,8 +18,15 @@ variable "protocols" {
   nullable    = false
 
   validation {
-    condition     = length(var.protocols) > 0 && alltrue([for protocol in var.protocols : contains(["Do53", "DoH"], protocol)])
-    error_message = "Specify at least one protocol. Valid values for `protocols` are `Do53` and `DoH`."
+    condition     = length(var.protocols) > 0
+    error_message = "Specify at least one protocol for `protocols`."
+  }
+  validation {
+    condition = alltrue([
+      for protocol in var.protocols :
+      contains(["Do53", "DoH"], protocol)
+    ])
+    error_message = "Valid values for `protocols` are `Do53` and `DoH`."
   }
 }
 
