@@ -1,31 +1,18 @@
 # rule
 
-Creates one Route53 Resolver rule, with optional VPC associations, Route53 Profile associations, AWS RAM shares, and a resource group.
+This module creates following resources.
 
-- `FORWARD` requires an existing outbound endpoint and at least one target DNS server. Targets must use a single IP family. The default port is 53 for Do53 and 443 for DoH; explicit ports take precedence.
-- `SYSTEM` uses Resolver's default resolution for a domain and must not specify an outbound endpoint or target servers.
-
-`RECURSIVE` rules are created by AWS. `DELEGATE` and target Server Name Indication are not exposed by this module because the current AWS provider does not expose the required configuration.
-
-The endpoint must support each target's protocol and have network connectivity and security group egress to its address and port. This module does not create endpoints or network routes.
-
-Use unique, plan-time-known names for VPC associations, Profile associations, and shares. Their resource IDs can be outputs from resources created in the same plan. VPC associations are created in this module's provider account and region. For cross-account use, share the rule through `shares` and create the association in the consumer account after accepting the RAM share when required. Do not manage the same association from both this module and another module or resource.
+- `aws_route53_resolver_rule`
+- `aws_route53_resolver_rule_association` (optional)
+- `aws_route53profiles_resource_association` (optional)
+- `aws_ram_resource_share` (optional)
+- `aws_ram_principal_association` (optional)
+- `aws_ram_resource_association` (optional)
 
 ## Examples
 
 - [rule-forward](../../examples/rule-forward)
 - [rule-system](../../examples/rule-system)
-
-## Tests
-
-Run from the repository root:
-
-```sh
-terraform -chdir=modules/rule init -backend=false
-terraform -chdir=modules/rule test
-```
-
-Tests use a mock AWS provider and do not create AWS resources.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
