@@ -32,46 +32,75 @@ variable "protocols" {
 
 variable "default_security_group" {
   description = <<EOF
-  (Optional) The default security group for the outbound endpoint. DNS egress is allowed only to the configured destinations, using TCP/UDP 53 for Do53 and TCP 443 for DoH. Custom ports can be allowed with `egress_rules`.
-    (Optional) `enabled` - Whether to create the default security group. Defaults to `true`.
-    (Optional) `name` - The security group name. Defaults to the endpoint name.
-    (Optional) `description` - The security group description. Defaults to `Managed by Terraform.`.
-    (Optional) `egress_ipv4_cidrs` - IPv4 CIDRs of target DNS servers. Defaults to `[]`.
-    (Optional) `egress_ipv6_cidrs` - IPv6 CIDRs of target DNS servers. Defaults to `[]`.
-    (Optional) `egress_prefix_lists` - Destination prefix list IDs. Defaults to `[]`.
-    (Optional) `egress_security_groups` - Destination security group IDs. Defaults to `[]`.
-    (Optional) `egress_rules` - Additional egress rules. Defaults to `[]`.
-      (Required) `id` - A unique internal identifier for the rule.
-      (Optional) `description` - The rule description. Defaults to `Managed by Terraform.`.
-      (Required) `protocol` - The IP protocol, or `-1` for all protocols.
-      (Optional) `from_port` - The start of the port range. Required except for protocol `-1`.
-      (Optional) `to_port` - The end of the port range. Required except for protocol `-1`.
-      (Optional) `ipv4_cidrs` - Destination IPv4 CIDRs. Defaults to `[]`.
-      (Optional) `ipv6_cidrs` - Destination IPv6 CIDRs. Defaults to `[]`.
-      (Optional) `prefix_lists` - Destination prefix list IDs. Defaults to `[]`.
-      (Optional) `security_groups` - Destination security group IDs. Defaults to `[]`.
-      (Optional) `self` - Whether to allow the security group itself. Defaults to `false`.
+  (Optional) The configuration of the default security group for the Route53 Resolver Outbound Endpoint. Automatic egress rules allow TCP/UDP 53 for Do53 and TCP 443 for DoH, only to the configured egress destinations. `default_security_group` block as defined below.
+    (Optional) `enabled` - Whether to use the default security group. Defaults to `true`.
+    (Optional) `name` - The name of the default security group. If not provided, the Route53 Resolver Outbound Endpoint name is used for the name of security group.
+    (Optional) `description` - The description of the default security group.
+    (Optional) `ingress_rules` - A list of ingress rules in a security group. Defaults to `[]`. Each block of `ingress_rules` as defined below.
+      (Required) `id` - The ID of the ingress rule. This value is only used internally within Terraform code.
+      (Optional) `description` - The description of the rule.
+      (Required) `protocol` - The protocol to match. Note that if `protocol` is set to `-1`, it translates to all protocols, all port ranges, and `from_port` and `to_port` values should not be defined.
+      (Required) `from_port` - The start of port range for the protocols.
+      (Required) `to_port` - The end of port range for the protocols.
+      (Optional) `ipv4_cidrs` - The IPv4 network ranges to allow, in CIDR notation.
+      (Optional) `ipv6_cidrs` - The IPv6 network ranges to allow, in CIDR notation.
+      (Optional) `prefix_lists` - The prefix list IDs to allow.
+      (Optional) `security_groups` - The source security group IDs to allow.
+      (Optional) `self` - Whether the security group itself will be added as a source to this ingress rule.
+    (Optional) `egress_rules` - A list of egress rules in a security group. Defaults to `[]`. Each block of `egress_rules` as defined below.
+      (Required) `id` - The ID of the egress rule. This value is only used internally within Terraform code.
+      (Optional) `description` - The description of the rule.
+      (Required) `protocol` - The protocol to match. Note that if `protocol` is set to `-1`, it translates to all protocols, all port ranges, and `from_port` and `to_port` values should not be defined.
+      (Required) `from_port` - The start of port range for the protocols.
+      (Required) `to_port` - The end of port range for the protocols.
+      (Optional) `ipv4_cidrs` - The IPv4 network ranges to allow, in CIDR notation.
+      (Optional) `ipv6_cidrs` - The IPv6 network ranges to allow, in CIDR notation.
+      (Optional) `prefix_lists` - The prefix list IDs to allow.
+      (Optional) `security_groups` - The destination security group IDs to allow.
+      (Optional) `self` - Whether the security group itself will be added as a destination to this egress rule.
+    (Optional) `egress_ipv4_cidrs` - A list of IPv4 CIDR ranges of target DNS servers to allow the endpoint to forward queries to. Defaults to `[]`.
+    (Optional) `egress_ipv6_cidrs` - A list of IPv6 CIDR ranges of target DNS servers to allow the endpoint to forward queries to. Defaults to `[]`.
+    (Optional) `egress_prefix_lists` - A list of prefix list IDs of target DNS servers to allow the endpoint to forward queries to. Defaults to `[]`.
+    (Optional) `egress_security_groups` - A list of security group IDs of target DNS servers to allow the endpoint to forward queries to. Defaults to `[]`.
   EOF
   type = object({
-    enabled                = optional(bool, true)
-    name                   = optional(string)
-    description            = optional(string, "Managed by Terraform.")
+    enabled     = optional(bool, true)
+    name        = optional(string)
+    description = optional(string, "Managed by Terraform.")
+    ingress_rules = optional(
+      list(object({
+        id              = string
+        description     = optional(string, "Managed by Terraform.")
+        protocol        = string
+        from_port       = number
+        to_port         = number
+        ipv4_cidrs      = optional(list(string), [])
+        ipv6_cidrs      = optional(list(string), [])
+        prefix_lists    = optional(list(string), [])
+        security_groups = optional(list(string), [])
+        self            = optional(bool, false)
+      })),
+      []
+    )
+    egress_rules = optional(
+      list(object({
+        id              = string
+        description     = optional(string, "Managed by Terraform.")
+        protocol        = string
+        from_port       = number
+        to_port         = number
+        ipv4_cidrs      = optional(list(string), [])
+        ipv6_cidrs      = optional(list(string), [])
+        prefix_lists    = optional(list(string), [])
+        security_groups = optional(list(string), [])
+        self            = optional(bool, false)
+      })),
+      []
+    )
     egress_ipv4_cidrs      = optional(list(string), [])
     egress_ipv6_cidrs      = optional(list(string), [])
     egress_prefix_lists    = optional(list(string), [])
     egress_security_groups = optional(list(string), [])
-    egress_rules = optional(list(object({
-      id              = string
-      description     = optional(string, "Managed by Terraform.")
-      protocol        = string
-      from_port       = optional(number)
-      to_port         = optional(number)
-      ipv4_cidrs      = optional(list(string), [])
-      ipv6_cidrs      = optional(list(string), [])
-      prefix_lists    = optional(list(string), [])
-      security_groups = optional(list(string), [])
-      self            = optional(bool, false)
-    })), [])
   })
   default  = {}
   nullable = false

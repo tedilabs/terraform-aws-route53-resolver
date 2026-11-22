@@ -38,6 +38,7 @@ module "security_group" {
   description = var.default_security_group.description
   vpc_id      = data.aws_subnet.this[0].vpc_id
 
+  ingress_rules = var.default_security_group.ingress_rules
   egress_rules = concat(
     var.default_security_group.egress_rules,
     [

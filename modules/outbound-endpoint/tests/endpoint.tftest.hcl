@@ -100,6 +100,28 @@ run "custom_port" {
   }
 }
 
+run "custom_ingress_rules" {
+  command = plan
+  variables {
+    default_security_group = {
+      ingress_rules = [{
+        id         = "custom-ingress"
+        protocol   = "tcp"
+        from_port  = 8443
+        to_port    = 8443
+        ipv4_cidrs = ["10.30.0.0/16"]
+      }]
+    }
+  }
+  assert {
+    condition = (
+      length(module.security_group[0].ingress_rules) == 1 &&
+      alltrue([for rule in module.security_group[0].ingress_rules : rule.from_port == 8443])
+    )
+    error_message = "Custom ingress rules must be passed to the default security group."
+  }
+}
+
 run "external_security_group" {
   command = plan
   variables {
