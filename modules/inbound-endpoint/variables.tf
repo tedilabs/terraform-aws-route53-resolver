@@ -139,14 +139,14 @@ variable "security_groups" {
 }
 
 variable "ip_address_type" {
-  description = "(Optional) The type of IP addresses used by the Route53 Resolver Inbound Endpoint. Valid values are `IPV4`, `IPV6`, `DUALSTACK`. Defaults to `IPV4`."
+  description = "(Optional) The type of IP addresses used by the Route53 Resolver Inbound Endpoint. Valid values are `IPv4`, `IPv6` and `DUALSTACK`. Defaults to `IPv4`."
   type        = string
-  default     = "IPV4"
+  default     = "IPv4"
   nullable    = false
 
   validation {
-    condition     = contains(["IPV4", "IPV6", "DUALSTACK"], var.ip_address_type)
-    error_message = "Valid values for `ip_address_type` are `IPV4`, `IPV6` and `DUALSTACK`."
+    condition     = contains(["IPv4", "IPv6", "DUALSTACK"], var.ip_address_type)
+    error_message = "Valid values for `ip_address_type` are `IPv4`, `IPv6` and `DUALSTACK`."
   }
 }
 
