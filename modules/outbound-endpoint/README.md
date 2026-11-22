@@ -1,25 +1,14 @@
 # outbound-endpoint
 
-Creates a Route53 Resolver outbound endpoint with an optional security group and resource group. Requires AWS provider 6.27 or later for enhanced metrics.
+This module creates following resources.
 
-Allow the destination DNS server CIDRs, prefix lists, or security groups through `default_security_group`. Automatic rules use TCP/UDP 53 for `Do53` and TCP 443 for `DoH`. With no destinations or custom rules, the default security group permits no outbound traffic. Use `egress_rules` for custom DNS ports, or disable the default security group and supply `security_groups`.
-
-Provide at least two IP allocations, preferably in different Availability Zones within the same VPC. Subnet IDs may be outputs of resources created in the same plan. Network connectivity and routes to the target DNS servers must already exist. Resolver rules and their VPC associations are managed separately.
+- `aws_route53_resolver_endpoint`
+- `aws_security_group`
+- `aws_security_group_rule`
 
 ## Examples
 
 - [outbound-endpoint-simple](../../examples/outbound-endpoint-simple)
-
-## Tests
-
-Run from the repository root:
-
-```sh
-terraform -chdir=modules/outbound-endpoint init -backend=false
-terraform -chdir=modules/outbound-endpoint test
-```
-
-Tests use a mock AWS provider and do not create AWS resources.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
