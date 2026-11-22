@@ -9,11 +9,6 @@ This module creates following resources.
 - `aws_ram_principal_association` (optional)
 - `aws_ram_resource_association` (optional)
 
-## Examples
-
-- [rule-forward](../../examples/rule-forward)
-- [rule-system](../../examples/rule-system)
-
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
