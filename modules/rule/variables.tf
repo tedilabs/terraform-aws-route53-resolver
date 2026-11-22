@@ -86,9 +86,16 @@ variable "target_ips" {
     error_message = "Each `ipv6_address` must be a valid IPv6 address."
   }
   validation {
-    condition = (alltrue([for target in var.target_ips : target.ipv4_address != null]) ||
-      alltrue([for target in var.target_ips : target.ipv6_address != null])
-    )
+    condition = anytrue([
+      alltrue([
+        for target in var.target_ips :
+        target.ipv4_address != null
+      ]),
+      alltrue([
+        for target in var.target_ips :
+        target.ipv6_address != null
+      ]),
+    ])
     error_message = "All targets in a rule must use the same IP address family."
   }
   validation {
@@ -99,7 +106,10 @@ variable "target_ips" {
     error_message = "Target ports must be integers between 1 and 65535."
   }
   validation {
-    condition     = alltrue([for target in var.target_ips : contains(["Do53", "DoH"], target.protocol)])
+    condition = alltrue([
+      for target in var.target_ips :
+      contains(["Do53", "DoH"], target.protocol)
+    ])
     error_message = "Valid target protocols are `Do53` and `DoH`."
   }
 }
