@@ -6,10 +6,6 @@ This module creates following resources.
 - `aws_security_group`
 - `aws_security_group_rule`
 
-## Examples
-
-- [outbound-endpoint-simple](../../examples/outbound-endpoint-simple)
-
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
