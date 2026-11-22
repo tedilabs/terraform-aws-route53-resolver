@@ -79,6 +79,16 @@ output "subnets" {
   value       = toset(aws_route53_resolver_endpoint.this.ip_address[*].subnet_id)
 }
 
+output "rni_enhanced_metrics_enabled" {
+  description = "Whether Resolver network interface enhanced metrics are enabled."
+  value       = aws_route53_resolver_endpoint.this.rni_enhanced_metrics_enabled
+}
+
+output "target_name_server_metrics_enabled" {
+  description = "Whether target name server metrics are enabled for the outbound endpoint."
+  value       = aws_route53_resolver_endpoint.this.target_name_server_metrics_enabled
+}
+
 output "resource_group" {
   description = "The resource group created to manage resources in this module."
   value = merge(

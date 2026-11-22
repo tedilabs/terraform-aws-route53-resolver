@@ -71,7 +71,9 @@ This module creates following resources.
 | <a name="output_protocols"></a> [protocols](#output\_protocols) | A set of protocols to use for the Route53 Resolver Outbound Endpoint. |
 | <a name="output_region"></a> [region](#output\_region) | The AWS region this module resources resides in. |
 | <a name="output_resource_group"></a> [resource\_group](#output\_resource\_group) | The resource group created to manage resources in this module. |
+| <a name="output_rni_enhanced_metrics_enabled"></a> [rni\_enhanced\_metrics\_enabled](#output\_rni\_enhanced\_metrics\_enabled) | Whether Resolver network interface enhanced metrics are enabled. |
 | <a name="output_security_groups"></a> [security\_groups](#output\_security\_groups) | A set of security group IDs which is assigned to the Route53 Resolver Endpoint. |
 | <a name="output_subnets"></a> [subnets](#output\_subnets) | A set of the ID of subnets that IP addresses of resolver endpoint are allocated in. |
+| <a name="output_target_name_server_metrics_enabled"></a> [target\_name\_server\_metrics\_enabled](#output\_target\_name\_server\_metrics\_enabled) | Whether target name server metrics are enabled for the outbound endpoint. |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | The ID of the VPC that you want to create the resolver endpoint in. |
 <!-- END_TF_DOCS -->
