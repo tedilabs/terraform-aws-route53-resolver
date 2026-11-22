@@ -3,8 +3,9 @@
 This module creates following resources.
 
 - `aws_route53_resolver_endpoint`
-- `aws_security_group`
-- `aws_security_group_rule`
+- `aws_security_group` (optional)
+- `aws_vpc_security_group_ingress_rule` (optional)
+- `aws_vpc_security_group_egress_rule` (optional)
 
 ## Enhanced metrics
 
