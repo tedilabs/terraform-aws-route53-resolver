@@ -1,6 +1,6 @@
 # rule-system
 
-Creates a SYSTEM rule for `aws.corp.example.com` and associates it with the default VPC in `us-east-1`. When a broader `corp.example.com` forwarding rule exists, this subdomain uses Resolver's default resolution instead. No outbound endpoint is required.
+Creates a SYSTEM rule for `aws.corp.example.com` in `us-east-1`. When a broader `corp.example.com` forwarding rule exists, this subdomain uses Resolver's default resolution instead. No outbound endpoint is required.
 
 ## Usage
 
@@ -21,9 +21,7 @@ After reviewing the plan, run `terraform apply` with the same variables. Run `te
 
 ## Providers
 
-| Name | Version |
-| ---- | ------- |
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 6.0 |
+No providers.
 
 ## Modules
 
@@ -33,9 +31,7 @@ After reviewing the plan, run `terraform apply` with the same variables. Run `te
 
 ## Resources
 
-| Name | Type |
-| ---- | ---- |
-| [aws_vpc.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
+No resources.
 
 ## Inputs
 

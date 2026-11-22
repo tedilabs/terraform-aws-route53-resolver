@@ -104,44 +104,6 @@ variable "target_ips" {
   }
 }
 
-variable "vpc_associations" {
-  description = <<EOF
-  (Optional) VPC associations created in the current provider account and region. Defaults to `[]`.
-    (Required) `name` - A unique association name, also used as the Terraform instance key. Must be known at plan time.
-    (Required) `vpc` - The VPC ID. May be an output of a resource created in the same plan.
-  EOF
-  type = list(object({
-    name = string
-    vpc  = string
-  }))
-  default  = []
-  nullable = false
-
-  validation {
-    condition     = length(distinct(var.vpc_associations[*].name)) == length(var.vpc_associations)
-    error_message = "VPC association names must be unique."
-  }
-}
-
-variable "profile_associations" {
-  description = <<EOF
-  (Optional) Route53 Profile associations. Defaults to `[]`.
-    (Required) `name` - A unique association name, also used as the Terraform instance key. Must be known at plan time.
-    (Required) `profile` - The ID of the Route53 Profile.
-  EOF
-  type = list(object({
-    name    = string
-    profile = string
-  }))
-  default  = []
-  nullable = false
-
-  validation {
-    condition     = length(distinct(var.profile_associations[*].name)) == length(var.profile_associations)
-    error_message = "Profile association names must be unique."
-  }
-}
-
 variable "timeouts" {
   description = "(Optional) How long to wait for the rule to be created, updated, or deleted. Each timeout defaults to `10m`."
   type = object({

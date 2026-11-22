@@ -24,7 +24,6 @@ Terraform Modules from [this package](https://github.com/tedilabs/terraform-aws-
     - Resource Sharing via AWS RAM
   - Resolver Rule
     - Forward and System Rules
-    - VPC and Route53 Profile Associations
     - Resource Sharing via AWS RAM
 
 

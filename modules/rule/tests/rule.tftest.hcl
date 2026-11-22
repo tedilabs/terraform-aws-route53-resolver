@@ -80,24 +80,18 @@ run "system_rule" {
   }
 }
 
-run "associations_and_sharing" {
+run "sharing" {
   command = apply
   variables {
-    vpc_associations     = [{ name = "workload", vpc = "vpc-0123456789abcdef0" }]
-    profile_associations = [{ name = "shared-dns", profile = "rp-0123456789abcdef0" }]
-    shares               = [{ name = "workloads", principals = ["123456789013"] }]
+    shares = [{ name = "workloads", principals = ["123456789013"] }]
   }
   assert {
     condition = (
-      aws_route53_resolver_rule_association.this["workload"].vpc_id == "vpc-0123456789abcdef0" &&
-      aws_route53_resolver_rule_association.this["workload"].resolver_rule_id == output.id &&
-      aws_route53profiles_resource_association.this["shared-dns"].resource_arn == output.arn &&
-      aws_route53profiles_resource_association.this["shared-dns"].profile_id == "rp-0123456789abcdef0" &&
       length(output.sharing.shares) == 1 &&
       contains(output.sharing.shares["workloads"].resources, output.arn) &&
       contains(output.sharing.shares["workloads"].principals, "123456789013")
     )
-    error_message = "Associations and RAM shares must reference the created rule."
+    error_message = "RAM shares must reference the created rule."
   }
 }
 

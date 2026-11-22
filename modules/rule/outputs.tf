@@ -23,38 +23,6 @@ output "name" {
   value       = aws_route53_resolver_rule.this.name
 }
 
-output "vpc_associations" {
-  description = "The VPC associations, keyed by association name."
-  value = {
-    for name, association in aws_route53_resolver_rule_association.this : name => {
-      id   = association.id
-      name = association.name
-      vpc  = association.vpc_id
-    }
-  }
-}
-
-output "profile_associations" {
-  description = "A list of Route53 Profile associations with the rule."
-  value = [
-    for assoc in aws_route53profiles_resource_association.this : {
-      id       = assoc.id
-      name     = assoc.name
-      owner_id = assoc.owner_id
-      status   = assoc.status
-      profile = {
-        id     = assoc.profile_id
-        region = assoc.region
-      }
-      resource = {
-        type       = assoc.resource_type
-        arn        = assoc.resource_arn
-        properties = assoc.resource_properties
-      }
-    }
-  ]
-}
-
 output "domain_name" {
   description = "The domain matched by the rule."
   value       = aws_route53_resolver_rule.this.domain_name
