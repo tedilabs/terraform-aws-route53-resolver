@@ -66,7 +66,7 @@ run "explicit_port" {
 run "system_rule" {
   command = plan
   variables {
-    rule_type         = "SYSTEM"
+    type              = "SYSTEM"
     outbound_endpoint = null
     target_ips        = []
   }
@@ -114,7 +114,7 @@ run "reject_forward_without_targets" {
 run "reject_system_with_forwarding" {
   command = plan
   variables {
-    rule_type = "SYSTEM"
+    type = "SYSTEM"
   }
   expect_failures = [var.outbound_endpoint, var.target_ips]
 }
@@ -162,9 +162,9 @@ run "reject_unsupported_protocol" {
 run "reject_recursive_rule" {
   command = plan
   variables {
-    rule_type         = "RECURSIVE"
+    type              = "RECURSIVE"
     outbound_endpoint = null
     target_ips        = []
   }
-  expect_failures = [var.rule_type]
+  expect_failures = [var.type]
 }

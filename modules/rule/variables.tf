@@ -17,15 +17,15 @@ variable "domain_name" {
   nullable    = false
 }
 
-variable "rule_type" {
+variable "type" {
   description = "(Optional) The rule type. `FORWARD` sends matching queries to target DNS servers. `SYSTEM` resolves a domain using Resolver's default behavior, overriding a broader forwarding rule. Defaults to `FORWARD`."
   type        = string
   default     = "FORWARD"
   nullable    = false
 
   validation {
-    condition     = contains(["FORWARD", "SYSTEM"], var.rule_type)
-    error_message = "Valid values for `rule_type` are `FORWARD` and `SYSTEM`."
+    condition     = contains(["FORWARD", "SYSTEM"], var.type)
+    error_message = "Valid values for `type` are `FORWARD` and `SYSTEM`."
   }
 }
 
@@ -35,7 +35,7 @@ variable "outbound_endpoint" {
   default     = null
 
   validation {
-    condition = (var.rule_type == "FORWARD"
+    condition = (var.type == "FORWARD"
       ? try(trimspace(var.outbound_endpoint) != "", false)
       : var.outbound_endpoint == null
     )
@@ -61,7 +61,7 @@ variable "target_ips" {
   nullable = false
 
   validation {
-    condition     = var.rule_type == "FORWARD" ? length(var.target_ips) > 0 : length(var.target_ips) == 0
+    condition     = var.type == "FORWARD" ? length(var.target_ips) > 0 : length(var.target_ips) == 0
     error_message = "Provide at least one target for FORWARD rules and no targets for SYSTEM rules."
   }
   validation {

@@ -28,7 +28,7 @@ output "domain_name" {
   value       = aws_route53_resolver_rule.this.domain_name
 }
 
-output "rule_type" {
+output "type" {
   description = "The Resolver rule type."
   value       = aws_route53_resolver_rule.this.rule_type
 }

@@ -13,7 +13,7 @@ module "rule" {
 
   name        = "system-aws-corporate"
   domain_name = "aws.corp.example.com"
-  rule_type   = "SYSTEM"
+  type        = "SYSTEM"
 
   tags = {
     "project" = "terraform-aws-route53-resolver-examples"

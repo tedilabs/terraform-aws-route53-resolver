@@ -24,7 +24,7 @@ resource "aws_route53_resolver_rule" "this" {
 
   name                 = local.metadata.name
   domain_name          = var.domain_name
-  rule_type            = var.rule_type
+  rule_type            = var.type
   resolver_endpoint_id = var.outbound_endpoint
 
   dynamic "target_ip" {
