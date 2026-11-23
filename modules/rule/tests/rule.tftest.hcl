@@ -93,6 +93,10 @@ run "sharing" {
     )
     error_message = "RAM shares must reference the created rule."
   }
+  assert {
+    condition     = contains(output.sharing.shares["workloads"].permissions, "arn:aws:ram::aws:permission/AWSRAMDefaultPermissionResolverRule")
+    error_message = "RAM shares must use the default RAM permission for resolver rules."
+  }
 }
 
 run "reject_forward_without_endpoint" {

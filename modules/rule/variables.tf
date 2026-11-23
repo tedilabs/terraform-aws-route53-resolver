@@ -169,14 +169,14 @@ variable "shares" {
   description = <<EOF
   (Optional) A list of resource shares via RAM (Resource Access Manager). Each block of `shares` as defined below.
     (Required) `name` - The name of the resource share. The name of the RAM resource share is generated with the name of the resolver rule as a prefix.
-    (Optional) `permissions` - A set of the names of the RAM permissions to associate with the resource share. Defaults to `[]`, which uses the AWS default permission for the resource type.
+    (Optional) `permissions` - A set of the names of the RAM permissions to associate with the resource share. Defaults to `["AWSRAMDefaultPermissionResolverRule"]`.
     (Optional) `external_principals_allowed` - Whether principals outside your organization can be associated with the resource share. Defaults to `false`.
     (Optional) `principals` - A set of principals to associate with the resource share. Possible values are an AWS account ID, an ARN of an organization in AWS Organizations, an ARN of an organizational unit (OU) in AWS Organizations, or an ARN of an IAM role or user. Defaults to `[]`.
     (Optional) `tags` - A map of tags to add to the resource share. Defaults to `{}`.
   EOF
   type = list(object({
     name                        = string
-    permissions                 = optional(set(string), [])
+    permissions                 = optional(set(string), ["AWSRAMDefaultPermissionResolverRule"])
     external_principals_allowed = optional(bool, false)
     principals                  = optional(set(string), [])
     tags                        = optional(map(string), {})
