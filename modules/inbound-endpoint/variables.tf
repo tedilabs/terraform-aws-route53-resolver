@@ -152,7 +152,7 @@ variable "ip_address_type" {
 
 variable "ip_allocations" {
   description = <<EOF
-  (Optional) The configuration for IP allocations of the Route53 Resolver Inbound Endpoint. Select at least two Availability Zone and one subnet for each zone. Each item of `ip_allocations` block as defined below.
+  (Optional) The configuration for IP allocations of the Route53 Resolver Inbound Endpoint. Select at least two Availability Zones and one subnet for each zone. Each item of `ip_allocations` block as defined below.
     (Required) `subnet` - The ID of the subnet that contains the IP address. You can specify only one subnet per Availability Zone.
     (Optional) `ipv4_address` - IPv4 address from the provided subnet. Defaults to be randomly configured by Amazon.
     (Optional) `ipv6_address` - IPv6 address from the provided subnet. Defaults to be randomly configured by Amazon.
@@ -205,7 +205,7 @@ variable "tags" {
 }
 
 variable "module_tags_enabled" {
-  description = "(Optional) Whether to create AWS Resource Tags for the module informations."
+  description = "(Optional) Whether to create AWS Resource Tags for the module information."
   type        = bool
   default     = true
   nullable    = false

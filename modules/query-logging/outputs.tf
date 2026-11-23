@@ -14,7 +14,7 @@ output "arn" {
 }
 
 output "owner_id" {
-  description = "The AWS Account ID the account that created the query logging configuration."
+  description = "The AWS Account ID of the account that created the query logging configuration."
   value       = aws_route53_resolver_query_log_config.this.owner_id
 }
 
