@@ -81,7 +81,7 @@ variable "default_security_group" {
       (Optional) `ipv4_cidrs` - The IPv4 network ranges to allow, in CIDR notation.
       (Optional) `ipv6_cidrs` - The IPv6 network ranges to allow, in CIDR notation.
       (Optional) `prefix_lists` - The prefix list IDs to allow.
-      (Optional) `security_groups` - The source security group IDs to allow.
+      (Optional) `security_groups` - The destination security group IDs to allow.
       (Optional) `self` - Whether the security group itself will be added as a destination to this egress rule.
     (Optional) `ingress_ipv4_cidrs` - A list of IPv4 CIDR ranges to allow to query to the endpoint. Defaults to `[]`.
     (Optional) `ingress_ipv6_cidrs` - A list of IPv6 CIDR ranges to allow to query to the endpoint. Defaults to `[]`.
